@@ -77,15 +77,6 @@ nav a:hover {
   padding: 1rem;
 }
 
-#contalogin{
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-#contalogin.ativo{
-  opacity: 1;
-}
-
 footer {
   background-color: #004f92;
   color: #ffffff;
@@ -194,9 +185,16 @@ header #trampuja{
   gap: 10px;
 }
 
+#btns-login {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
 .btn-submit {
   width: 100%;
-  padding: 12px;
+  padding: 15px;
+  gap: 10px;
   background-color: #007bff;
   color: white;
   border: none;
