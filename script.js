@@ -56,19 +56,123 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const pfp = document.getElementById("pfp");
-  const contalogin = document.getElementById("contalogin");
 
-  console.log("Elementos encontrados:", { pfp, contalogin }); // Debug inicial
 
-  if (pfp && contalogin) {
-    pfp.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("PFP Clicado!");
-      contalogin.classList.toggle("ativo");
-    });
-  } else {
-    console.error("Não achei os IDs pfp ou contalogin. Verifique o HTML.");
+
+
+
+
+
+
+const { createClient } = supabase;
+
+const supabaseClient = createClient(
+  'https://eglmqjoqmnipcfnhdcyl.supabase.co',
+  'sb_publishable_1mVT1wJ14LpEb7xYEoQmvA_fYna-o-Y'
+);
+
+
+
+
+
+
+
+
+window.onload = async () => {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+
+  const loginA = document.getElementById("login-a")
+  const userArea = document.getElementById("user-area")
+  const userName = document.getElementById("user-name")
+
+  // Checagem inicial
+  if (session?.user) {
+    loginA.style.display = "none"
+    userArea.style.display = "block"
+    userName.textContent = session.user.email
   }
-});
+
+  // Atualiza automaticamente quando loga/desloga
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (session?.user) {
+      console.log("LOGADO:", session.user.email)
+      loginA.style.display = "none"
+      userArea.style.display = "block"
+      userName.textContent = session.user.email
+    } else {
+      console.log("NÃO LOGADO")
+      loginA.style.display = "block"
+      userArea.style.display = "none"
+      userName.textContent = ""
+    }
+  })
+}
+
+document.getElementById("logout-a").addEventListener("click", async (e) => {
+  e.preventDefault()
+  await supabaseClient.auth.signOut()
+})
+
+
+async function signup() {
+
+  const checkbox = document.getElementById('termos');
+
+  if (!checkbox.checked) {
+    alert('Você precisa aceitar os termos!');
+    return; // para o signup
+  }
+
+
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert('Conta criada! Verifica o email 📩');
+  }
+
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+
+  if (error) alert(error.message);
+}
+
+async function login() {
+
+  const checkbox = document.getElementById('termos');
+
+  if (!checkbox.checked) {
+    alert('Você precisa aceitar os termos!');
+    return;
+  }
+
+  
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert('Logado com sucesso 🚀');
+    console.log(data);
+  }
+}
+
+async function getUser() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  console.log(user);
+}
