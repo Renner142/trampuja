@@ -7,7 +7,7 @@
     <title>TrampuJá</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
 <header id="topo">
@@ -21,8 +21,11 @@
     
     <div id="conta">
   <div id="contalogin">
-    <a href="#">Login</a>
-    <a href="#" data-link="cadastro.html">Cadastro</a>
+    <a id="login-a" href="#" data-link="cadastro.html">Login</a>
+  </div>
+  <div id="user-area" style="display: none;">
+    <span id="user-name"></span>
+    <a id="logout-a" href="#">Sair</a>
   </div>
 
   <a id="pfp" href="#"><img src="img/logomenor.jpg" alt="" style="height: 5rem; border-radius: 50%;"></a>
@@ -61,5 +64,12 @@
     </div>
   </div>
 </footer>
+
+
+
+
+
+
+    <script src="script.js"></script>
 </body>
 </html>
