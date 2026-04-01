@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const html = await response.text();
         contentDiv.innerHTML = html;
+
+
+        initCarrossel();
+
+
       } catch (error) {
         console.error(error);
         contentDiv.innerHTML = "<p style='color:red'>Erro ao carregar: " + url + ". Verifique se o nome do arquivo está certo.</p>";
@@ -54,11 +59,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+function initCarrossel() {
+  // Pega todos os containers de carrossel
+  const carrosseis = document.querySelectorAll('.carrossel-container');
 
+  carrosseis.forEach(container => {
+    const produtos = container.querySelector('.produtos');
+    const prevBtn = container.querySelector('.nav.prev');
+    const nextBtn = container.querySelector('.nav.next');
 
+    if (!produtos || !prevBtn || !nextBtn) return;
 
+    // Calcula deslocamento com base na largura do primeiro card + gap
+    const card = produtos.querySelector('.produto');
+    if (!card) return;
 
+    const gap = parseInt(getComputedStyle(produtos).gap) || 20;
+    const cardWidth = card.offsetWidth + gap;
 
+    // Remove event listeners antigos para não duplicar
+    prevBtn.replaceWith(prevBtn.cloneNode(true));
+    nextBtn.replaceWith(nextBtn.cloneNode(true));
+
+    const left = container.querySelector('.nav.prev');
+    const right = container.querySelector('.nav.next');
+
+    left.addEventListener('click', () => {
+      produtos.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
+
+    right.addEventListener('click', () => {
+      produtos.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
+  });
+}
 
 
 
