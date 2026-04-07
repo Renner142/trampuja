@@ -1,14 +1,8 @@
 
-document.addEventListener("DOMContentLoaded", () => {
-    const topo = document.getElementById('topo');
+async function loadPage(url) {
+      const topo = document.getElementById('topo');
     const contentDiv = document.getElementById('content');
-
-    if (!topo || !contentDiv) {
-      console.error("ERRO: Não achei o id='topo' ou o id='content' no HTML!");
-      return;
-    }
-
-    async function loadPage(url) {
+    
       console.log("Tentando carregar:", url);
       try {
         const response = await fetch(url);
@@ -17,14 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const html = await response.text();
         contentDiv.innerHTML = html;
 
-
         initCarrossel();
-
 
       } catch (error) {
         console.error(error);
         contentDiv.innerHTML = "<p style='color:red'>Erro ao carregar: " + url + ". Verifique se o nome do arquivo está certo.</p>";
       }
+    }
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const topo = document.getElementById('topo');
+    const contentDiv = document.getElementById('content');
+
+    if (!topo || !contentDiv) {
+      console.error("ERRO: Não achei o id='topo' ou o id='content' no HTML!");
+      return;
     }
 
     // Carrega a página inicial
@@ -133,6 +137,13 @@ window.onload = async () => {
       loginA.style.display = "none"
       userArea.style.display = "block"
       userName.textContent = session.user.email
+
+      loadPage('main.html')
+      const links = document.querySelectorAll('#topo a');
+      links.forEach(link => link.classList.remove('current'));
+      const mainLink = document.querySelector('#topo a[data-link="main.html"]');
+      if (mainLink) mainLink.classList.add('current');
+
     } else {
       console.log("NÃO LOGADO")
       loginA.style.display = "block"
