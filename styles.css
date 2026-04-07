@@ -38,6 +38,10 @@ header h1 {
   justify-content: flex-start;
 }
 
+header #trampuja{
+  height: 11rem;
+}
+
 nav {
   display: flex;
   justify-content: center;
@@ -321,29 +325,13 @@ footer {
 }
 
 
-@media (max-width: 768px) {
-header {
-    flex-direction: column;
-    padding: 1rem;
-  }
-nav {
-    order: -1;
-  }
 
-nav a {
-    font-size: 0.9rem; 
-  }
-}
 
-#contalogin{
-          
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
 
-header #trampuja{
-  height: 11rem;
-  
-}
+
+
+
+
 
 #meuFormulario {
   max-width: 400px;
@@ -402,4 +390,71 @@ header #trampuja{
 
 .btn-submit:hover {
   background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+nav {
+    order: -1;
+  }
+
+nav a {
+    font-size: 0.9rem; 
+  }
+
+#contalogin{
+          
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+  .clickaveis {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .clickaveis h2 {
+    font-size: 1.5rem; /* menor que 2rem */
+  }
+
+  .produto {
+    min-width: 140px; /* menor que 180px */
+    padding: 10px;
+  }
+
+  .produto h3 {
+    font-size: 14px;
+  }
+
+  .produto p {
+    font-size: 12px;
+  }
+
+  .nav {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .prev {
+    left: -5px;
+  }
+
+  .next {
+    right: -5px;
+  }
 }
